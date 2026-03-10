@@ -51,7 +51,7 @@ export default function ContactSection() {
                                 <a href="mailto:mornenemdilbusiness@gmail.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"><Mail className="h-5 w-5 text-primary" /> mornenemdilbusiness@email.com</a>
                                 <div className="flex gap-4 pt-4">
                                     <Button variant="outline" size="icon" asChild><a onClick={() => window.open("https://www.instagram.com/code.with.yousef/")}><Instagram className="h-5 w-5" /></a></Button>
-                                    {/* <Button variant="outline" size="icon" asChild><a href="#">< className="h-5 w-5" /></a></Button> */}
+                                    <div onClick={() => window.open("https://www.instagram.com/code.with.yousef/")} className="hover:cursor-pointer flex items-center gap-3 text-foreground hover:text-primary transition-colors">@code.with.yousef</div>
                                 </div>
                             </div>
                         </div>
