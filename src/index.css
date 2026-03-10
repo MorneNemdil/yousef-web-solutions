@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Light Mode - Professional Deep Blue */
+  --background: oklch(0.99 0.01 255);
+  --foreground: oklch(25% 0.12 255); 
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(25% 0.12 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(25% 0.12 255);
+  
+  --primary: oklch(45% 0.18 255); 
+  --primary-foreground: oklch(0.99 0.01 255);
+  
+  --secondary: oklch(90% 0.05 255); 
+  --secondary-foreground: oklch(45% 0.18 255);
+  
+  --muted: oklch(0.96 0.02 255);
+  --muted-foreground: oklch(55% 0.08 255);
+  
+  --accent: oklch(65% 0.15 250); 
+  --accent-foreground: oklch(1 0 0);
+  
+  --destructive: oklch(55% 0.22 35);
+  --destructive-foreground: oklch(0.99 0.01 100);
+  
+  --border: oklch(0.90 0.03 255);
+  --input: oklch(0.90 0.03 255);
+  --ring: oklch(45% 0.18 255); 
+  
+  /* Chart & Sidebar refined for Blue Theme */
+  --chart-1: oklch(45% 0.18 255);
+  --chart-2: oklch(65% 0.15 250);
+  --chart-3: oklch(75% 0.10 255);
+  --sidebar: oklch(0.99 0.01 255);
+  --sidebar-foreground: oklch(25% 0.12 255);
+  --sidebar-primary: oklch(45% 0.18 255);
+  --sidebar-primary-foreground: oklch(1 0 0);
+
+  --font-sans: Montserrat, sans-serif;
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* Dark Mode - Tech-Focused Navy */
+  --background: oklch(18% 0.04 255);
+  --foreground: oklch(98% 0.01 255);
+  --card: oklch(22% 0.05 255);
+  --card-foreground: oklch(98% 0.01 255);
+  --primary: oklch(65% 0.14 250);
+  --primary-foreground: oklch(15% 0.05 255);
+  --secondary: oklch(30% 0.08 255);
+  --secondary-foreground: oklch(90% 0.05 255);
+  --muted: oklch(25% 0.04 255);
+  --muted-foreground: oklch(75% 0.05 255);
+  --accent: oklch(55% 0.15 250);
+  --border: oklch(30% 0.06 255);
+  --ring: oklch(65% 0.14 250);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground; }
+}
