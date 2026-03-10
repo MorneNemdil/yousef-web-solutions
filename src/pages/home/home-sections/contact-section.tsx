@@ -48,7 +48,7 @@ export default function ContactSection() {
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">Let’s build something <span className="text-primary italic">great</span> together.</h2>
                             <p className="mt-4 text-muted-foreground leading-relaxed">Ready to start your next technical project? Reach out for a consultation or just to say hello.</p>
                             <div className="mt-8 space-y-4">
-                                <a href="mailto:mornenemdilbusiness@gmail.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"><Mail className="h-5 w-5 text-primary" /> mornenemdilbusiness@email.com</a>
+                                <a href="mailto:mornenemdilbusiness@gmail.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"><Mail className="h-5 w-5 text-primary" /> mornenemdilbusiness@gmail.com</a>
                                 <div className="flex gap-4 pt-4">
                                     <Button variant="outline" size="icon" asChild><a onClick={() => window.open("https://www.instagram.com/code.with.yousef/")}><Instagram className="h-5 w-5" /></a></Button>
                                     <div onClick={() => window.open("https://www.instagram.com/code.with.yousef/")} className="hover:cursor-pointer flex items-center gap-3 text-foreground hover:text-primary transition-colors">@code.with.yousef</div>
