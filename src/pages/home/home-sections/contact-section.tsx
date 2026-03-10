@@ -1,61 +1,89 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Mail, Send, CheckCircle, Loader2, Instagram } from "lucide-react";
+import { useState } from "react";
 
-const ContactSection = () => {
+const sectionVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+export default function ContactSection() {
+    const [status, setStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus('SENDING');
+        const formData = new FormData(e.currentTarget);
+        formData.append("access_key", import.meta.env.VITE_EMAIL_ACCESS_KEY!);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus('SUCCESS');
+                (e.target as HTMLFormElement).reset();
+                setTimeout(() => setStatus('IDLE'), 5000);
+            } else {
+                setStatus('ERROR');
+            }
+        } catch (error: any) {
+            setStatus('ERROR');
+            console.log("Error: ", error);
+        }
+    };
     return (
-        <section className="py-20 bg-primary text-primary-foreground overflow-hidden" id="contact">
-            <div className="container mx-auto px-4 sm:px-6">
-                <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
-                    {/* Information Column */}
-                    <div className="min-w-0">
-                        <h2 className="section-header text-white mb-8 decoration-accent">Get In Touch</h2>
-                        <div className="space-y-8">
-                            <p className="text-lg opacity-80 mb-10 max-w-xl">
-                                For urgent repairs, scheduled maintenance, or new system installations, please reach out via our direct channels. Our team aims to respond to all digital correspondence within 24 hours.
-                            </p>
-                            <div className="flex items-start gap-4 min-w-0">
-                                <div className="p-3 bg-accent rounded-full text-white shrink-0"><Phone size={22} /></div>
-                                <div className="min-w-0 flex-1">
-                                    <p className="text-xs opacity-60 uppercase tracking-widest">Call Us</p>
-                                    <a href="tel:07921 022971" className="text-lg sm:text-xl font-semibold hover:text-accent transition-colors block truncate">07921 022971</a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-4 min-w-0">
-                                <div className="p-3 bg-secondary rounded-full text-primary shrink-0"><Mail size={22} /></div>
-                                <div className="min-w-0 flex-1">
-                                    <p className="text-xs opacity-60 uppercase tracking-widest">Email Address</p>
-                                    <a href="mailto:chrisbarrowplumbingandheating@hotmail.co.uk" className="text-lg sm:text-xl font-semibold hover:text-secondary transition-colors break-all block">chrisbarrowplumbingandheating@hotmail.co.uk</a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-4 min-w-0">
-                                <div className="p-3 bg-white/10 rounded-full text-white shrink-0"><MapPin size={22} /></div>
-                                <div className="min-w-0 flex-1">
-                                    <p className="text-xs opacity-60 uppercase tracking-widest">Service Area</p>
-                                    <p className="text-lg sm:text-xl font-semibold">Local and Surrounding Areas</p>
+        <section id="contact" className="py-24 bg-background">
+            <div className="container mx-auto px-6 max-w-5xl">
+                <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                    <div className="grid gap-12 md:grid-cols-2">
+                        <div>
+                            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">Let’s build something <span className="text-primary italic">great</span> together.</h2>
+                            <p className="mt-4 text-muted-foreground leading-relaxed">Ready to start your next technical project? Reach out for a consultation or just to say hello.</p>
+                            <div className="mt-8 space-y-4">
+                                <a href="mailto:mornenemdilbusiness@gmail.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"><Mail className="h-5 w-5 text-primary" /> mornenemdilbusiness@email.com</a>
+                                <div className="flex gap-4 pt-4">
+                                    <Button variant="outline" size="icon" asChild><a onClick={() => window.open("https://www.instagram.com/code.with.yousef/")}><Instagram className="h-5 w-5" /></a></Button>
+                                    {/* <Button variant="outline" size="icon" asChild><a href="#">< className="h-5 w-5" /></a></Button> */}
                                 </div>
                             </div>
                         </div>
+                        {status === 'SUCCESS' ? (
+                            <div className="h-full flex flex-col items-center justify-center text-center space-y-4 animate-in fade-in zoom-in">
+                                <CheckCircle size={64} className="text-green-500" />
+                                <h3 className="text-2xl font-black text-[var(--brand-navy)]">Message Received!</h3>
+                                <p className="text-gray-600">I'll get back to you as soon as possible.</p>
+                                <button onClick={() => setStatus('IDLE')} className="text-[var(--brand-blue)] font-bold underline">New Message</button>
+                            </div>
+                        ) : (<Card className="border-border bg-card shadow-lg shadow-primary/5">
+                            <CardHeader><CardTitle>Send a Message</CardTitle><CardDescription>I'll get back to you as soon as possible.</CardDescription></CardHeader>
+                            <form onSubmit={handleSubmit}>
+                                <CardContent className="space-y-4">
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        <Input name="name" placeholder="Name" type="text" className="bg-muted/50" />
+                                        <Input name="email" placeholder="Email" type="email" className="bg-muted/50" />
+                                    </div>
+                                    <Input name="subject" type="text" placeholder="Subject" className="bg-muted/50" />
+                                    <Textarea required name="message" placeholder="How can I help you?" className="min-h-[120px] bg-muted/50" />
+                                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
+                                        {status === 'SENDING'
+                                            ? <><Loader2 className="animate-spin" /> Sending...</>
+                                            : <>Send Message <Send className="ml-2 h-4 w-4" /></>
+                                        }
+                                    </Button>
+                                </CardContent>
+                            </form>
+                        </Card>)}
                     </div>
-
-                    {/* Map Column - Optimized for Grid Containment */}
-                    <div className="w-full">
-                        <iframe
-                            title="Office Location"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d80584.18433355208!2d-0.19827011985955146!3d50.86337583648604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48758509f620496d%3A0x5395725d70f14652!2sBrighton!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk"
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            className="border rounded-2xl shadow-2xl w-full aspect-square lg:aspect-video"
-                        />
-                    </div>
-
-                </div>
+                </motion.div>
             </div>
         </section>
     );
-};
-
-export default ContactSection;
+}

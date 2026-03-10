@@ -1,77 +1,95 @@
+import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import HeroHeating from "@/assets/hero-pictures/hero-heating.png";
-import HeroPlumbing from "@/assets/hero-pictures/hero-plumbing.png";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Sparkles } from "lucide-react";
+import BgImage from "@/assets/heroImage.png"
+import { Link as ScrollLink } from "react-scroll";
 
-const HeroSection = () => {
-    const services = document.getElementById('services');
-    const contact = document.getElementById('contact');
+export default function Hero() {
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+        }
+    };
+
+    const itemVariants: Variants = {
+        hidden: { y: 30, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.8, ease: "easeOut" }
+        }
+    };
 
     return (
-        <section className="relative min-h-screen flex items-center bg-background overflow-hidden pt-20 lg:pt-0">
-            <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-12 lg:py-0">
-                {/* Left Column: Copy and CTA */}
-                <div className="z-10 animate-in fade-in slide-in-from-left duration-1000 text-center lg:text-left">
-                    <h1 className="text-4xl md:text-7xl font-bold text-primary mb-6 leading-tight">
-                        Chris Barrow <br />
-                        <span className="text-accent italic">Plumbing & Heating</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-foreground/80 mb-8 max-w-lg mx-auto lg:mx-0">
-                        Delivering expert plumbing solutions and high-efficiency heating systems.
-                        Reliable service for your home, backed by years of industry experience.
-                    </p>
-                    <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                        <Button
-                            onClick={() => {
-                                window.scroll({
-                                    top: contact?.offsetTop,
-                                    behavior: 'smooth'
-                                });
-                            }}
-                            size="lg"
-                            className="bg-accent hover:bg-accent/90 text-white px-8 py-6 text-lg rounded-full"
-                        >
-                            Book a Service
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                window.scroll({
-                                    top: services?.offsetTop,
-                                    behavior: 'smooth'
-                                });
-                            }}
-                            size="lg"
-                            variant="outline"
-                            className="border-primary text-primary hover:bg-primary/5 px-8 py-6 text-lg rounded-full"
-                        >
-                            Our Services
-                        </Button>
-                    </div>
-                </div>
+        <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background">
+            {/* Background Image Layer */}
+            <div className="absolute inset-0 z-0">
+                <img
+                    src={BgImage}
+                    alt="Technical Background"
+                    className="h-full w-full object-cover"
 
-                {/* Right Column: Visual Composition */}
-                <div className="relative h-[300px] sm:h-[450px] lg:h-[600px] w-full animate-in fade-in slide-in-from-right duration-1000">
-                    {/* Main Industry Image */}
-                    <div className="absolute top-0 right-0 w-4/5 h-4/5 lg:w-5/6 lg:h-5/6 rounded-3xl overflow-hidden shadow-2xl bg-secondary/20">
-                        <img
-                            src={HeroPlumbing}
-                            alt="Professional plumbing installation"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    {/* Accent Detail Image */}
-                    <div className="absolute bottom-0 left-0 w-1/2 h-1/2 rounded-2xl overflow-hidden shadow-xl border-4 lg:border-8 border-white bg-accent/20">
-                        <img
-                            src={HeroHeating}
-                            alt="High-efficiency boiler system"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    {/* Design Element - Only visible on Desktop to save space */}
-                    <div className="hidden lg:block absolute top-1/2 -left-4 w-12 h-12 bg-secondary rounded-full animate-bounce" />
-                </div>
+                />
+                {/* Darkening/Color Overlay for contrast */}
+                <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
             </div>
+
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="container relative z-10 mx-auto px-6 text-center"
+            >
+                <motion.div variants={itemVariants}>
+                    <Badge variant="outline" className="mb-8 border-primary/20 bg-background/50 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-md">
+                        <Sparkles className="mr-2 h-3.5 w-3.5" />
+                        Accepting Projects Now
+                    </Badge>
+                </motion.div>
+
+                <motion.h1
+                    variants={itemVariants}
+                    className="mx-auto max-w-5xl text-6xl font-black tracking-tighter sm:text-8xl lg:text-9xl text-foreground"
+                >
+                    Yousef Web <span className="text-primary italic">Solutions</span>
+                </motion.h1>
+
+                <motion.p
+                    variants={itemVariants}
+                    className="mx-auto mt-8 max-w-2xl text-xl leading-relaxed text-muted-foreground/90 sm:text-2xl"
+                >
+                    Architecting high-performance digital ecosystems with a focus on UI/UX precision and scalable engineering logic.
+                </motion.p>
+
+                <motion.div variants={itemVariants} className="mt-12 flex flex-wrap justify-center gap-6">
+                    <ScrollLink
+                        to={"projects"}
+                        smooth={true}
+                        duration={500}
+                        offset={-64}
+                        spy={true}
+                    >
+                        <Button size="lg" className="h-14 px-10 text-lg font-semibold shadow-xl shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+                            Explore Work <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                    </ScrollLink>
+                    <ScrollLink
+                        to={"services"}
+                        smooth={true}
+                        duration={500}
+                        offset={-64}
+                        spy={true}
+                    >
+                        <Button variant="outline" size="lg" className="h-14 border-primary/20 px-10 text-lg font-medium backdrop-blur-md transition-all hover:bg-primary/5">
+                            View Services
+                        </Button>
+                    </ScrollLink>
+                </motion.div>
+            </motion.div>
         </section>
     );
-};
-
-export default HeroSection;
+}
