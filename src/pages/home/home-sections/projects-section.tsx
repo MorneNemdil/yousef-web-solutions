@@ -3,16 +3,16 @@ import { ExternalLink } from "lucide-react";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BarberImage from "@/assets/barberImage.png";
-import SmartTempAcImage from "@/assets/smartTempAcImage.png";
 import OaklandConstructionImage from "@/assets/oaklandConstructionImage.png";
+import TrueFlowImage from "@/assets/trueFlowImage.png";
 
 
 const projects = [
   {
-    title: "Sleek Air Conditioning Business",
-    image: SmartTempAcImage,
+    title: "Sleek Plumbing and Heating Business",
+    image: TrueFlowImage,
     tech: ["React", "Tailwind"],
-    link: "https://smart-temp-ac.vercel.app/",
+    link: "https://true-flow-plumbing-heating.vercel.app/",
   }, {
     title: "Innovative Construction Company",
     image: OaklandConstructionImage,
